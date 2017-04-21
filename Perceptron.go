@@ -89,7 +89,6 @@ func predict(input []float64, weights []float64) float64 {
 ///////////  Returns new weights and error count for each prediction based on the observed values.
 func process(inputs [][]float64, weights []float64, rate float64) ([]float64, int) {
 	errorcount := 0
-	fmt.Println(weights)
 	for i := 0; i <= len(inputs)-1; i++ {
 		//fmt.Println("Input", i, ":", inputs[i])
 		target := inputs[i][len(inputs[i])-1]
@@ -108,11 +107,14 @@ func process(inputs [][]float64, weights []float64, rate float64) ([]float64, in
 	return weights, errorcount
 }
 
-func perceptron(inputs [][]float64, weights []float64, rate float64, iterations int) ([]float64, int) {
+func perceptron(inputs [][]float64, weights []float64, rate float64, iterations int) ([]float64, []int) {
 	var finalweights []float64
-	var finalerrors int
+	var finalerrors []int
+	var finalerror int
 	for i := 0; i <= iterations; i++ {
-		finalweights, finalerrors = process(inputs, weights, rate)
+		fmt.Println("Input weight loop", i, ":", finalweights)
+		finalweights, finalerror = process(inputs, weights, rate)
+		finalerrors = append(finalerrors, finalerror)
 		//fmt.Println(finalweights, finalerrors)
 	}
 	return finalweights, finalerrors
